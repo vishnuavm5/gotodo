@@ -17,6 +17,7 @@ type Users struct {
 }
 
 func (user *Users) CreateNewUser(w http.ResponseWriter, r *http.Request) {
+
 	user.DB = pkg.ConnectToDataBase()
 	type parameters struct {
 		Name     string `json:"name"`
@@ -58,7 +59,9 @@ func (user *Users) CreateNewUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (user *Users) Login(w http.ResponseWriter, r *http.Request) {
+
 	user.DB = pkg.ConnectToDataBase()
+
 	type parameters struct {
 		Username string `json:"username"`
 		Password string `json:"password"`

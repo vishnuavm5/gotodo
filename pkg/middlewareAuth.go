@@ -8,7 +8,6 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
-	"github.com/joho/godotenv"
 )
 
 type Claims struct {
@@ -21,11 +20,11 @@ type UserData struct {
 	Id       uuid.UUID
 	Username string
 }
-type authedHandler func(http.ResponseWriter, *http.Request, UserData)
+type authedHandler func(http.ResponseWriter, *http.Request, *UserData)
 
 func MiddlewareAuth(handler authedHandler) http.HandlerFunc {
 	claims := &Claims{}
-	godotenv.Load()
+	//godotenv.Load()
 	secret := os.Getenv("SECRET")
 	println(secret)
 	if secret == "" {
@@ -43,6 +42,9 @@ func MiddlewareAuth(handler authedHandler) http.HandlerFunc {
 			RespondWithError(w, 400, fmt.Sprintf("Could't get user : %v ", err))
 			return
 		}
-		handler(w, r, UserData{Id: claims.Id, Username: claims.Username})
+		user := &UserData{}
+		user.Id = claims.Id
+		user.Username = claims.Username
+		handler(w, r, user)
 	}
 }

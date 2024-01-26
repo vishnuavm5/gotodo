@@ -2,11 +2,11 @@ package api
 
 import (
 	"fmt"
+	"hellocheck/pkg"
 	"log"
 	"net/http"
 	"os"
 
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
@@ -25,7 +25,7 @@ func New() *App {
 
 func (a *App) Start() error {
 	fmt.Println("Hello world")
-	godotenv.Load()
+	// godotenv.Load()
 	port := os.Getenv("PORT")
 
 	if port == "" {
@@ -37,6 +37,7 @@ func (a *App) Start() error {
 	}
 
 	log.Printf("server is running on port :%v", port)
+	pkg.InitDB()
 
 	err := server.ListenAndServe()
 

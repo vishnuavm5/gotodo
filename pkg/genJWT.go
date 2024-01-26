@@ -6,14 +6,12 @@ import (
 	"os"
 
 	"github.com/golang-jwt/jwt"
-	"github.com/joho/godotenv"
 )
 
 func GenerateJWT(username string, id string) (string, error) {
 
-	godotenv.Load()
 	secret := os.Getenv("SECRET")
-	println(secret)
+
 	if secret == "" {
 		log.Fatal("no secret found")
 

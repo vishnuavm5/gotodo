@@ -18,8 +18,6 @@ func GenerateJWT(username string, id string) (string, error) {
 		return "", fmt.Errorf("no secret found")
 	}
 
-	//claims := data{Username: username, Exp: time.Now().Add(time.Hour * 1)}
-
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{"username": username, "id": id}).SignedString([]byte(secret))
 
 	if err != nil {
